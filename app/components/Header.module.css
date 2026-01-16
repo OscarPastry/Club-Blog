@@ -1,0 +1,40 @@
+.header {
+    border-bottom: 4px double var(--foreground);
+    margin-bottom: 2rem;
+    padding: 1rem 0;
+    text-align: center;
+    width: 100%;
+}
+
+.meta {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--foreground);
+    padding-bottom: 0.5rem;
+    margin-bottom: 0.5rem;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-family: sans-serif;
+    /* Contrast for meta info */
+}
+
+.title {
+    font-size: clamp(3rem, 8vw, 6rem);
+    /* Responsive font size */
+    font-weight: 700;
+    text-transform: uppercase;
+    margin: 1rem 0;
+    letter-spacing: -2px;
+    line-height: 0.9;
+}
+
+.subline {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    font-style: italic;
+    border-top: 1px solid var(--foreground);
+    padding-top: 0.5rem;
+    font-size: 0.9rem;
+}
