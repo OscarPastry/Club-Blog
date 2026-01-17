@@ -1,7 +1,10 @@
 :root {
-  --background: #fdf6e3; /* Creamy paper */
-  --foreground: #2b2b2b; /* Ink */
-  --accent: #c0392b; /* Stamp red */
+  --background: #fdf6e3;
+  /* Creamy paper */
+  --foreground: #2b2b2b;
+  /* Ink */
+  --accent: #c0392b;
+  /* Stamp red */
   /* SVG Noise texture for paper feel */
   --paper-texture: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.08'/%3E%3C/svg%3E");
 }
@@ -19,10 +22,22 @@ body {
   /* Fonts will be set via CSS variables from layout.js */
   font-family: var(--font-playfair), var(--font-noto-jp), serif;
   line-height: 1.6;
+  overflow-x: hidden;
+  /* Prevent horizontal scroll on small screens */
+  overflow-wrap: break-word;
+  /* Ensure long words break */
+  word-break: break-word;
+  /* Additional support */
+  -webkit-font-smoothing: antialiased;
 }
 
 /* Typography constants */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-weight: 700;
   margin-bottom: 0.5rem;
   line-height: 1.2;

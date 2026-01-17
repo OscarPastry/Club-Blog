@@ -1,66 +1,55 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+import Header from "./components/Header";
+import HamburgerMenu from "./components/HamburgerMenu";
+import { getSortedPostsData } from "@/lib/posts";
+import styles from "./Home.module.css";
 
-export default function Home() {
-  return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>To get started, edit the page.js file.</h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+export default async function Home() {
+  const posts = await getSortedPostsData();
+
+  if (!posts || posts.length === 0) {
+    return (
+      <main className={styles.container}>
+        <Header />
+        <p style={{ textAlign: 'center' }}>No news today.</p>
       </main>
-    </div>
+    );
+  }
+
+  const latestPost = posts[0];
+  const sidePosts = posts.slice(1);
+
+  return (
+    <main className={styles.container}>
+      <HamburgerMenu posts={posts} />
+      <Header />
+
+      <div className={styles.grid}>
+        {/* Main Lead Article */}
+        <article className={styles.leadArticle}>
+          <span className={styles.leadMeta}>{latestPost.date} | {latestPost.author}</span>
+          <h2 className={styles.leadTitle}>
+            <a href={`/posts/${latestPost.id}`}>{latestPost.title}</a>
+          </h2>
+          <p className={styles.leadSummary}>
+            {latestPost.summary}
+          </p>
+          <div className={styles.readMore}>
+            <a href={`/posts/${latestPost.id}`}>Continue Reading →</a>
+          </div>
+        </article>
+
+        {/* Sidebar / Smaller Articles */}
+        <aside className={styles.sidebar}>
+          {sidePosts.map(post => (
+            <article key={post.id} className={styles.sideArticle}>
+              <h3 className={styles.sideTitle}>
+                <a href={`/posts/${post.id}`}>{post.title}</a>
+              </h3>
+              <p className={styles.sideSummary}>{post.summary}</p>
+            </article>
+          ))}
+        </aside>
+      </div>
+    </main>
   );
 }

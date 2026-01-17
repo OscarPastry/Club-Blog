@@ -1,0 +1,21 @@
+import styles from './Header.module.css';
+
+export default function Header() {
+    return (
+        <header className={styles.header}>
+            <div className={styles.meta}>
+                <span>Week. 1</span>
+                <span>Weekly Edition</span>
+                <span>Week's Theme: Prefecture</span>
+            </div>
+            <h1 className={styles.title}>
+                The Club Times
+            </h1>
+            <div className={styles.subline}>
+                <span>Japanese Club Official Blog</span>
+                <span>•</span>
+                <span>日本語クラブ</span>
+            </div>
+        </header>
+    );
+}

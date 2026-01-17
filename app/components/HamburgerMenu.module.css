@@ -1,0 +1,131 @@
+.menuContainer {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    z-index: 100;
+}
+
+.hamburgerBtn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.hamburgerBtn span {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background-color: var(--foreground);
+    transition: transform 0.3s ease;
+}
+
+/* Drawer Container */
+/* Drawer Container */
+.drawer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 250px;
+    background-color: var(--background);
+    border-right: 4px double var(--foreground);
+    padding: 2rem 1rem;
+    z-index: 1000;
+    transform: translateX(-100%);
+    visibility: hidden;
+    /* Hide when closed */
+    transition: transform 0.3s ease-in-out, visibility 0.3s ease-in-out;
+    box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+.drawer.open {
+    transform: translateX(0);
+    visibility: visible;
+}
+
+/* Overlay Backdrop */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Back to standard dim */
+    z-index: 999;
+    /* Behind drawer, above content */
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.overlay.open {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Close Button */
+.menuHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--accent);
+}
+
+.closeBtn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+    color: var(--foreground);
+    padding: 0.5rem;
+}
+
+.closeBtn:hover {
+    color: var(--accent);
+}
+
+.homeLink {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: bold;
+    color: var(--foreground);
+    text-decoration: none;
+    font-family: var(--font-playfair);
+}
+
+.homeLink:hover {
+    color: var(--accent);
+}
+
+.archiveList {
+    list-style: none;
+    padding: 0;
+}
+
+.archiveList li {
+    margin-bottom: 1rem;
+    border-bottom: 1px dashed var(--foreground);
+    padding-bottom: 0.5rem;
+}
+
+.archiveList a {
+    text-decoration: none;
+    font-family: var(--font-playfair);
+    font-size: 1.1rem;
+    display: block;
+    color: var(--foreground);
+}
+
+.archiveList a:hover {
+    color: var(--accent);
+}

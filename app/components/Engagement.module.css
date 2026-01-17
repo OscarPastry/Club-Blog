@@ -1,0 +1,127 @@
+.container {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 4px double var(--foreground);
+}
+
+.loading {
+    text-align: center;
+    font-style: italic;
+    color: #666;
+    padding: 2rem;
+}
+
+.statsRow {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background-color: rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+}
+
+.metric {
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.likeBtn {
+    background: none;
+    border: 2px solid var(--accent);
+    color: var(--accent);
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    font-family: inherit;
+    font-weight: bold;
+    border-radius: 20px;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.likeBtn:hover {
+    background-color: var(--accent);
+    color: var(--background);
+}
+
+.commentsSection h3 {
+    border-bottom: 1px solid var(--foreground);
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.commentList {
+    margin-bottom: 2rem;
+}
+
+.empty {
+    font-style: italic;
+    color: #666;
+    text-align: center;
+}
+
+.comment {
+    background-color: rgba(255, 255, 255, 0.6);
+    padding: 1rem;
+    border-bottom: 1px dashed #ccc;
+    margin-bottom: 1rem;
+}
+
+.commentHeader {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    color: #444;
+}
+
+.commentForm {
+    background-color: rgba(0, 0, 0, 0.03);
+    padding: 1.5rem;
+    border-radius: 8px;
+}
+
+.commentForm h4 {
+    margin-bottom: 1rem;
+}
+
+.input,
+.textarea {
+    width: 100%;
+    padding: 0.8rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-family: inherit;
+    background-color: #fff;
+}
+
+.textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.submitBtn {
+    background-color: var(--foreground);
+    color: var(--background);
+    border: none;
+    padding: 0.8rem 1.5rem;
+    cursor: pointer;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: opacity 0.2s;
+}
+
+.submitBtn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.submitBtn:hover:not(:disabled) {
+    opacity: 0.8;
+}

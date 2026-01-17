@@ -14,13 +14,13 @@ const notoJP = Noto_Serif_JP({
 });
 
 export const metadata = {
-  title: "Club Blog - Morning Edition",
+  title: "Club Blog - Weekly Edition",
   description: "A blog for the Japanese Club",
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={`${playfair.variable} ${notoJP.variable}`}>
         {children}
       </body>
