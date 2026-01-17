@@ -14,8 +14,8 @@ const notoJP = Noto_Serif_JP({
 });
 
 export const metadata = {
-  title: "Club Blog - Weekly Edition",
-  description: "A blog for the Japanese Club",
+  title: "Wabi Sabi Weekly - Japanese Club VIT Chennai",
+  description: "A blog for the Japanese Club at VIT Chennai",
 };
 
 export default function RootLayout({ children }) {
