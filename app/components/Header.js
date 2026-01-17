@@ -9,7 +9,7 @@ export default function Header() {
                 <span>Week's Theme: Prefecture</span>
             </div>
             <h1 className={styles.title}>
-                The Club Times
+                Wabi Sabi Weekly
             </h1>
             <div className={styles.subline}>
                 <span>Japanese Club Official Blog</span>
