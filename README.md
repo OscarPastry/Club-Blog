@@ -1,2 +1,3 @@
-#Club Blog Site 
-##work in progress
+Club Blog Site 
+
+work in progress
