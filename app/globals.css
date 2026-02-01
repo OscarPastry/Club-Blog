@@ -71,3 +71,12 @@ a {
 .border-thick-bottom {
   border-bottom: 2px solid var(--foreground);
 }
+/* Content Styling */
+.markdown-content img {
+  display: block;
+  margin: 2rem auto;
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
