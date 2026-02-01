@@ -29,6 +29,7 @@ export default async function Post({ params }) {
 
                 {/* Markdown Content */}
                 <div
+                    className="markdown-content"
                     dangerouslySetInnerHTML={{ __html: postData.contentHtml }}
                     style={{ fontSize: '1.1rem', lineHeight: '1.8' }}
                 />
