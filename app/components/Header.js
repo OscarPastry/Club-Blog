@@ -6,7 +6,7 @@ export default function Header() {
             <div className={styles.meta}>
                 <span>Week. 1</span>
                 <span>Weekly Edition</span>
-                <span>Week's Theme: Prefecture</span>
+                <span>Week's Theme: Literature</span>
             </div>
             <h1 className={styles.title}>
                 Wabi Sabi Weekly
