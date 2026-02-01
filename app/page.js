@@ -3,6 +3,8 @@ import HamburgerMenu from "./components/HamburgerMenu";
 import { getSortedPostsData } from "@/lib/posts";
 import styles from "./Home.module.css";
 
+export const revalidate = 0;
+
 export default async function Home() {
   const posts = await getSortedPostsData();
 
