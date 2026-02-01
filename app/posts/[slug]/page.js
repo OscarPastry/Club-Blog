@@ -8,6 +8,8 @@ export async function generateStaticParams() {
     return getAllPostIds();
 }
 
+export const revalidate = 0;
+
 export default async function Post({ params }) {
     const { slug } = await params;
     const postData = await getPostData(slug);
