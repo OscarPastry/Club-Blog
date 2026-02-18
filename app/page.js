@@ -30,7 +30,7 @@ export default async function Home() {
         <article className={styles.leadArticle}>
           <span className={styles.leadMeta}>{latestPost.date} | {latestPost.author}</span>
           <h2 className={styles.leadTitle}>
-            <a href={`/posts/${latestPost.id}`}>{latestPost.title}</a>
+            <a href={`/posts/${latestPost.id}`} dangerouslySetInnerHTML={{ __html: latestPost.title }} />
           </h2>
           <p className={styles.leadSummary}>
             {latestPost.summary}
@@ -45,7 +45,7 @@ export default async function Home() {
           {sidePosts.map(post => (
             <article key={post.id} className={styles.sideArticle}>
               <h3 className={styles.sideTitle}>
-                <a href={`/posts/${post.id}`}>{post.title}</a>
+                <a href={`/posts/${post.id}`} dangerouslySetInnerHTML={{ __html: post.title }} />
               </h3>
               <p className={styles.sideSummary}>{post.summary}</p>
             </article>

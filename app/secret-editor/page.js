@@ -307,7 +307,7 @@ export default function SecretEditor() {
                 <ul style={{ listStyle: 'none', padding: 0, marginTop: '1rem' }}>
                     {posts.map(post => (
                         <li key={post.id} style={{ marginBottom: '1rem', paddingBottom: '1rem', borderBottom: '1px dashed #ccc' }}>
-                            <div style={{ fontWeight: 'bold', fontSize: '0.9rem' }}>{post.title}</div>
+                            <div style={{ fontWeight: 'bold', fontSize: '0.9rem' }} dangerouslySetInnerHTML={{ __html: post.title }} />
                             <div style={{ fontSize: '0.8rem', color: '#666', marginBottom: '0.5rem' }}>{post.date}</div>
                             <div style={{ display: 'flex', gap: '0.5rem' }}>
                                 <button onClick={() => handleEdit(post)} style={{ cursor: 'pointer', fontSize: '0.8rem' }}>Edit</button>

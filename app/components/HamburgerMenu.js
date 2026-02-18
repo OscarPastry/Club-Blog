@@ -49,7 +49,7 @@ export default function HamburgerMenu({ posts = [] }) {
                     {posts.map((post) => (
                         <li key={post.id}>
                             <Link href={`/posts/${post.id}`}>
-                                {post.date}: {post.title}
+                                {post.date}: <span dangerouslySetInnerHTML={{ __html: post.title }} />
                             </Link>
                         </li>
                     ))}
