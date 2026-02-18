@@ -18,7 +18,14 @@ export default async function Home() {
   }
 
   const latestPost = posts[0];
-  const sidePosts = posts.slice(1);
+  const sidePosts = posts.slice(1, 3);
+
+  const truncateSummary = (text, wordLimit) => {
+    if (!text) return '';
+    const words = text.split(' ');
+    if (words.length <= wordLimit) return text;
+    return words.slice(0, wordLimit).join(' ') + '.....';
+  };
 
   return (
     <main className={styles.container}>
@@ -47,7 +54,7 @@ export default async function Home() {
               <h3 className={styles.sideTitle}>
                 <a href={`/posts/${post.id}`} dangerouslySetInnerHTML={{ __html: post.title }} />
               </h3>
-              <p className={styles.sideSummary}>{post.summary}</p>
+              <p className={styles.sideSummary}>{truncateSummary(post.summary, 100)}</p>
             </article>
           ))}
         </aside>
