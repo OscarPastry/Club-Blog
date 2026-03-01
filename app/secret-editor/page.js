@@ -1,12 +1,17 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import rehypeRaw from 'rehype-raw';
 
 export default function SecretEditor() {
     const router = useRouter();
     const [status, setStatus] = useState('');
     const [posts, setPosts] = useState([]);
     const [editingId, setEditingId] = useState(null);
+    const [showPreview, setShowPreview] = useState(true);
+    const fileInputRef = useRef(null);
 
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [passwordInput, setPasswordInput] = useState('');
@@ -41,6 +46,24 @@ export default function SecretEditor() {
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData(prev => ({ ...prev, [name]: value }));
+    };
+
+    const handleFileUpload = (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        if (!file.name.endsWith('.md')) {
+            alert('Please upload a .md file');
+            return;
+        }
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            const text = event.target.result;
+            setFormData(prev => ({ ...prev, content: text }));
+            setShowPreview(true);
+        };
+        reader.readAsText(file);
+        // Reset file input so the same file can be re-uploaded
+        if (fileInputRef.current) fileInputRef.current.value = '';
     };
 
     const [postComments, setPostComments] = useState([]);
@@ -241,15 +264,96 @@ export default function SecretEditor() {
                     </div>
 
                     <div>
-                        <label>Content (Markdown):</label>
-                        <textarea
-                            name="content"
-                            value={formData.content}
-                            onChange={handleChange}
-                            rows={15}
-                            placeholder="Write your story here..."
-                            style={{ width: '100%', padding: '0.5rem', fontFamily: 'inherit' }}
-                        />
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
+                            <label style={{ fontWeight: 'bold' }}>Content (Markdown):</label>
+                            <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                                <button
+                                    type="button"
+                                    onClick={() => fileInputRef.current?.click()}
+                                    style={{
+                                        padding: '4px 10px',
+                                        fontSize: '0.8rem',
+                                        cursor: 'pointer',
+                                        border: '1px solid var(--foreground)',
+                                        background: 'var(--background)',
+                                        color: 'var(--foreground)',
+                                        borderRadius: '4px'
+                                    }}
+                                >
+                                    📄 Upload .md
+                                </button>
+                                <input
+                                    type="file"
+                                    accept=".md"
+                                    ref={fileInputRef}
+                                    onChange={handleFileUpload}
+                                    style={{ display: 'none' }}
+                                />
+                                <button
+                                    type="button"
+                                    onClick={() => setShowPreview(prev => !prev)}
+                                    style={{
+                                        padding: '4px 10px',
+                                        fontSize: '0.8rem',
+                                        cursor: 'pointer',
+                                        border: '1px solid var(--foreground)',
+                                        background: showPreview ? 'var(--foreground)' : 'var(--background)',
+                                        color: showPreview ? 'var(--background)' : 'var(--foreground)',
+                                        borderRadius: '4px'
+                                    }}
+                                >
+                                    {showPreview ? '👁 Hide Preview' : '👁 Show Preview'}
+                                </button>
+                            </div>
+                        </div>
+
+                        <div style={{ display: 'grid', gridTemplateColumns: showPreview ? '1fr 1fr' : '1fr', gap: '1rem' }}>
+                            <textarea
+                                name="content"
+                                value={formData.content}
+                                onChange={handleChange}
+                                rows={20}
+                                placeholder="Write your story here or upload a .md file..."
+                                style={{
+                                    width: '100%',
+                                    padding: '0.5rem',
+                                    fontFamily: 'monospace',
+                                    fontSize: '0.9rem',
+                                    resize: 'vertical',
+                                    minHeight: '400px'
+                                }}
+                            />
+                            {showPreview && (
+                                <div
+                                    style={{
+                                        border: '1px solid var(--foreground)',
+                                        padding: '1rem',
+                                        overflowY: 'auto',
+                                        minHeight: '400px',
+                                        maxHeight: '600px',
+                                        fontFamily: 'inherit',
+                                        lineHeight: '1.6'
+                                    }}
+                                >
+                                    {formData.content ? (
+                                        <ReactMarkdown
+                                            remarkPlugins={[remarkGfm]}
+                                            rehypePlugins={[rehypeRaw]}
+                                            components={{
+                                                img: ({ node, ...props }) => {
+                                                    // Ensure the src is valid otherwise don't render
+                                                    return props.src ? <img {...props} style={{ maxWidth: '100%' }} /> : null;
+                                                }
+                                            }}
+                                        >
+                                            {formData.content}
+                                        </ReactMarkdown>
+                                    ) : (
+                                        <p style={{ color: '#999', fontStyle: 'italic' }}>Preview will appear here...</p>
+                                    )}
+                                </div>
+                            )}
+                        </div>
                     </div>
 
                     <button
@@ -267,7 +371,6 @@ export default function SecretEditor() {
                         {editingId ? 'Update Post' : 'Publish Post'}
                     </button>
 
-                    {status && <p style={{ textAlign: 'center', fontWeight: 'bold', color: 'var(--accent)' }}>{status}</p>}
                     {status && <p style={{ textAlign: 'center', fontWeight: 'bold', color: 'var(--accent)' }}>{status}</p>}
                 </form>
 

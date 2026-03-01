@@ -39,9 +39,7 @@ export default async function Home() {
           <h2 className={styles.leadTitle}>
             <a href={`/posts/${latestPost.id}`} dangerouslySetInnerHTML={{ __html: latestPost.title }} />
           </h2>
-          <p className={styles.leadSummary}>
-            {latestPost.summary}
-          </p>
+          <p className={styles.leadSummary} dangerouslySetInnerHTML={{ __html: latestPost.summary }} />
           <div className={styles.readMore}>
             <a href={`/posts/${latestPost.id}`}>Continue Reading →</a>
           </div>
@@ -54,7 +52,7 @@ export default async function Home() {
               <h3 className={styles.sideTitle}>
                 <a href={`/posts/${post.id}`} dangerouslySetInnerHTML={{ __html: post.title }} />
               </h3>
-              <p className={styles.sideSummary}>{truncateSummary(post.summary, 100)}</p>
+              <p className={styles.sideSummary} dangerouslySetInnerHTML={{ __html: truncateSummary(post.summary, 100) }} />
             </article>
           ))}
         </aside>
