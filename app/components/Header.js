@@ -4,9 +4,9 @@ export default function Header() {
     return (
         <header className={styles.header}>
             <div className={styles.meta}>
-                <span>Week. 4</span>
+                <span>Week. 5</span>
                 <span>Weekly Edition</span>
-                <span>Week's Theme: Gacha Culture</span>
+                <span>Week's Theme: Koi No Yokan</span>
             </div>
             <h1 className={styles.title}>
                 Wabi Sabi Weekly
