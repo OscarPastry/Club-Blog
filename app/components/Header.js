@@ -1,12 +1,13 @@
 import styles from './Header.module.css';
+import { siteConfig } from '@/lib/siteConfig';
 
 export default function Header() {
     return (
         <header className={styles.header}>
             <div className={styles.meta}>
-                <span>Week. 5</span>
-                <span>Weekly Edition</span>
-                <span>Week's Theme: Koi No Yokan</span>
+                <span>Week. {siteConfig.header.week}</span>
+                <span>{siteConfig.header.edition}</span>
+                <span>Week&apos;s Theme: {siteConfig.header.theme}</span>
             </div>
             <h1 className={styles.title}>
                 Wabi Sabi Weekly
