@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabase';
+import { verifyAuthToken } from '@/lib/auth';
 
 export async function GET(request) {
     const { searchParams } = new URL(request.url);
@@ -24,8 +25,18 @@ export async function GET(request) {
 
 
 export async function PUT(request) {
+    // Auth check
+    const auth = verifyAuthToken(request);
+    if (!auth.valid) {
+        return NextResponse.json({ success: false, error: auth.error }, { status: 401 });
+    }
+
     const body = await request.json();
     const { id, title, date, author, summary, content } = body;
+
+    if (!id) {
+        return NextResponse.json({ success: false, error: 'Post ID is required' }, { status: 400 });
+    }
 
     const { error } = await supabase
         .from('posts')
@@ -41,6 +52,12 @@ export async function PUT(request) {
 }
 
 export async function DELETE(request) {
+    // Auth check
+    const auth = verifyAuthToken(request);
+    if (!auth.valid) {
+        return NextResponse.json({ success: false, error: auth.error }, { status: 401 });
+    }
+
     const { searchParams } = new URL(request.url);
     const id = searchParams.get('id');
 
@@ -60,3 +77,4 @@ export async function DELETE(request) {
 
     return NextResponse.json({ success: true, message: 'Post deleted' });
 }
+

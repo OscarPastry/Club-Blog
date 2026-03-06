@@ -25,7 +25,7 @@ export default async function Post({ params }) {
                     {postData.date} • {postData.author}
                 </p>
 
-                <h1 style={{ fontSize: '3rem', textAlign: 'center', marginBottom: '2rem', lineHeight: '1.1' }} dangerouslySetInnerHTML={{ __html: postData.title }} />
+                <h1 style={{ fontSize: '3rem', textAlign: 'center', marginBottom: '2rem', lineHeight: '1.1' }}>{postData.title}</h1>
 
                 {/* Markdown Content */}
                 <div

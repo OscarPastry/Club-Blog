@@ -15,14 +15,26 @@ export default function SecretEditor() {
 
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [passwordInput, setPasswordInput] = useState('');
+    const [authToken, setAuthToken] = useState('');
 
-    const handleLogin = (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault();
-        // Check against environment variable
-        if (passwordInput === process.env.NEXT_PUBLIC_EDITOR_PASSWORD) {
-            setIsAuthenticated(true);
-        } else {
-            alert('Incorrect password');
+        try {
+            const res = await fetch('/api/auth', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ password: passwordInput }),
+            });
+            const data = await res.json();
+            if (res.ok && data.success) {
+                setAuthToken(data.token);
+                setIsAuthenticated(true);
+            } else {
+                alert(data.error || 'Incorrect password');
+            }
+        } catch (err) {
+            console.error('Auth error:', err);
+            alert('Authentication failed. Please try again.');
         }
     };
 
@@ -101,7 +113,10 @@ export default function SecretEditor() {
         try {
             await fetch('/api/engagement', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${authToken}`,
+                },
                 body: JSON.stringify({ slug: editingId, action: 'delete-comment', payload: { commentId } })
             });
 
@@ -131,7 +146,12 @@ export default function SecretEditor() {
         setStatus(`Deleting post ${id}...`);
 
         try {
-            const res = await fetch(`/api/post?id=${id}`, { method: 'DELETE' });
+            const res = await fetch(`/api/post?id=${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${authToken}`,
+                },
+            });
             const data = await res.json();
 
             if (res.ok && data.success) {
@@ -171,7 +191,10 @@ export default function SecretEditor() {
         try {
             const res = await fetch(url, {
                 method: method,
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${authToken}`,
+                },
                 body: JSON.stringify(body)
             });
 
@@ -410,7 +433,7 @@ export default function SecretEditor() {
                 <ul style={{ listStyle: 'none', padding: 0, marginTop: '1rem' }}>
                     {posts.map(post => (
                         <li key={post.id} style={{ marginBottom: '1rem', paddingBottom: '1rem', borderBottom: '1px dashed #ccc' }}>
-                            <div style={{ fontWeight: 'bold', fontSize: '0.9rem' }} dangerouslySetInnerHTML={{ __html: post.title }} />
+                            <div style={{ fontWeight: 'bold', fontSize: '0.9rem' }}>{post.title}</div>
                             <div style={{ fontSize: '0.8rem', color: '#666', marginBottom: '0.5rem' }}>{post.date}</div>
                             <div style={{ display: 'flex', gap: '0.5rem' }}>
                                 <button onClick={() => handleEdit(post)} style={{ cursor: 'pointer', fontSize: '0.8rem' }}>Edit</button>
