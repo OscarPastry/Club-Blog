@@ -33,8 +33,8 @@ export async function POST(request) {
         if (title.length > 500) {
             return NextResponse.json({ success: false, error: 'Title too long (max 500 chars)' }, { status: 400 });
         }
-        if (content.length > 100000) {
-            return NextResponse.json({ success: false, error: 'Content too long (max 100k chars)' }, { status: 400 });
+        if (content.length > 5000000) {
+            return NextResponse.json({ success: false, error: 'Content too long (max 5M chars)' }, { status: 400 });
         }
 
         // Generate slug
@@ -58,8 +58,13 @@ export async function POST(request) {
 
         return NextResponse.json({ success: true, message: 'Post created', slug });
     } catch (e) {
-        console.error(e);
-        return NextResponse.json({ success: false, message: 'Error saving post' }, { status: 500 });
+        console.error("CREATE_POST_ERROR:", e);
+        return NextResponse.json({
+            success: false,
+            message: 'Error saving post',
+            error: e.message || JSON.stringify(e) || e.toString(),
+            details: e
+        }, { status: 500 });
     }
 }
 

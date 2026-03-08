@@ -198,15 +198,18 @@ export default function SecretEditor() {
                 body: JSON.stringify(body)
             });
 
+            let data = {};
+            try { data = await res.json(); } catch (e) { }
+
             if (res.ok) {
                 setStatus(editingId ? 'Updated successfully!' : 'Created successfully!');
                 if (!editingId) resetForm(); // Clear if new post, keep if editing
             } else {
-                setStatus('Error saving.');
+                setStatus(`Error saving: ${data.error || res.statusText || 'Unknown error'}`);
             }
         } catch (err) {
             console.error(err);
-            setStatus('Error saving.');
+            setStatus(`Error saving: ${err.message}`);
         }
     };
 
