@@ -4,7 +4,7 @@ export default function Header() {
     return (
         <header className={styles.header}>
             <div className={styles.meta}>
-                <span>Week. 6</span>
+                <span>Week. 7</span>
                 <span>Weekly Edition</span>
                 <span>Week's Theme: Harajuku</span>
             </div>
