@@ -31,24 +31,35 @@ export async function PUT(request) {
         return NextResponse.json({ success: false, error: auth.error }, { status: 401 });
     }
 
-    const body = await request.json();
-    const { id, title, date, author, summary, content } = body;
+    try {
+        const text = await request.text();
+        const body = JSON.parse(text);
+        const { id, title, date, author, summary, content } = body;
 
-    if (!id) {
-        return NextResponse.json({ success: false, error: 'Post ID is required' }, { status: 400 });
+        if (!id) {
+            return NextResponse.json({ success: false, error: 'Post ID is required' }, { status: 400 });
+        }
+
+        const { error } = await supabase
+            .from('posts')
+            .update({ title, date, author, summary, content })
+            .eq('slug', id);
+
+        if (error) {
+            console.error(error);
+            return NextResponse.json({ success: false, error: 'Database error' }, { status: 500 });
+        }
+
+        return NextResponse.json({ success: true, message: 'Post updated' });
+    } catch (e) {
+        console.error("UPDATE_POST_ERROR:", e);
+        return NextResponse.json({
+            success: false,
+            message: 'Error updating post',
+            error: e.message || JSON.stringify(e) || e.toString(),
+            details: e
+        }, { status: 500 });
     }
-
-    const { error } = await supabase
-        .from('posts')
-        .update({ title, date, author, summary, content })
-        .eq('slug', id);
-
-    if (error) {
-        console.error(error);
-        return NextResponse.json({ success: false, error: 'Database error' }, { status: 500 });
-    }
-
-    return NextResponse.json({ success: true, message: 'Post updated' });
 }
 
 export async function DELETE(request) {

@@ -14,7 +14,8 @@ export async function POST(request) {
     }
 
     try {
-        const body = await request.json();
+        const text = await request.text();
+        const body = JSON.parse(text);
         const { title, date, author, summary, content } = body;
 
         // Input validation
