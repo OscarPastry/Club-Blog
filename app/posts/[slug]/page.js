@@ -1,46 +1,68 @@
-import { getPostData, getAllPostIds, getSortedPostsData } from '@/lib/posts';
+import { getPostData, getAllPostIds, getSortedPostsData } from "@/lib/posts";
 import Header from "../../components/Header";
 import HamburgerMenu from "../../components/HamburgerMenu";
-import Engagement from "../../components/Engagement"; // Import Engagement
-import Link from 'next/link';
+import Engagement from "../../components/Engagement";
+import ReadingProgress from "../../components/ReadingProgress";
+import Link from "next/link";
+import styles from "./page.module.css";
 
 export async function generateStaticParams() {
-    return getAllPostIds();
+  return getAllPostIds();
 }
 
 export const revalidate = 0;
 
 export default async function Post({ params }) {
-    const { slug } = await params;
-    const postData = await getPostData(slug);
-    const allPosts = await getSortedPostsData();
+  const { slug } = await params;
+  const postData = await getPostData(slug);
+  const allPosts = await getSortedPostsData();
 
-    return (
-        <main style={{ maxWidth: '800px', margin: '0 auto', padding: '2rem' }}>
-            <HamburgerMenu posts={allPosts} />
-            <Header />
+  return (
+    <main className={styles.container}>
+      <ReadingProgress />
+      <HamburgerMenu posts={allPosts} />
+      <Header />
 
-            <div style={{ padding: '2rem', border: '1px solid var(--foreground)', backgroundColor: 'rgba(255,255,255,0.4)' }}>
-                <p style={{ textAlign: 'center', marginBottom: '1rem', fontStyle: 'italic' }}>
-                    {postData.date} • {postData.author}
-                </p>
+      <div className={styles.articleLayout}>
+        {/* Main article column */}
+        <article className={styles.articleMain}>
+          <div className={styles.articleMeta}>
+            <span>[ {postData.date} ]</span>
+            <span>By {postData.author}</span>
+          </div>
 
-                <h1 style={{ fontSize: '3rem', textAlign: 'center', marginBottom: '2rem', lineHeight: '1.1' }} dangerouslySetInnerHTML={{ __html: postData.title }} />
+          <h1
+            className={styles.articleTitle}
+            dangerouslySetInnerHTML={{ __html: postData.title }}
+          />
 
-                {/* Markdown Content */}
-                <div
-                    className="markdown-content"
-                    dangerouslySetInnerHTML={{ __html: postData.contentHtml }}
-                    style={{ fontSize: '1.1rem', lineHeight: '1.8' }}
-                />
+          <div
+            className={`${styles.articleBody} markdown-content`}
+            dangerouslySetInnerHTML={{ __html: postData.contentHtml }}
+          />
 
-                {/* Engagement Section */}
-                <Engagement slug={slug} />
+          <Engagement slug={slug} />
 
-                <div style={{ marginTop: '3rem', borderTop: 'double 4px var(--foreground)', paddingTop: '1rem', textAlign: 'center' }}>
-                    <Link href="/">← Return to Front Page</Link>
-                </div>
-            </div>
-        </main>
-    );
+          <footer className={styles.articleFooter}>
+            <span>Wabi Sabi Weekly</span>
+            <span>© 2024 Wabi Sabi Weekly • Japanese Club Official Blog</span>
+          </footer>
+
+          <Link href="/" className={styles.returnLink}>
+            ← Return to Front Page
+          </Link>
+        </article>
+
+        {/* Sidebar */}
+        <aside className={styles.sidebar}>
+          <div className={styles.sidebarLabel}>In This Issue</div>
+          <p className={styles.sidebarNote}>
+            {postData.summary
+              ? postData.summary.replace(/<[^>]*>/g, "").slice(0, 160) + "…"
+              : "Continue reading for the full dispatch."}
+          </p>
+        </aside>
+      </div>
+    </main>
+  );
 }

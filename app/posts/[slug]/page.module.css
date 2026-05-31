@@ -1,0 +1,146 @@
+/* ─── Container ──────────────────────────────────────────────── */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem;
+    position: relative;
+    width: 100%;
+}
+
+@media (min-width: 768px) {
+    .container {
+        padding: 0 40px 60px;
+    }
+}
+
+/* ─── Article Layout (main + sidebar) ───────────────────────── */
+.articleLayout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    padding-top: 2rem;
+}
+
+@media (min-width: 960px) {
+    .articleLayout {
+        grid-template-columns: 1fr 260px;
+        gap: 0;
+        align-items: start;
+    }
+}
+
+/* ─── Main Article Column ────────────────────────────────────── */
+.articleMain {
+    min-width: 0;
+}
+
+@media (min-width: 960px) {
+    .articleMain {
+        padding-right: 48px;
+        border-right: 1px solid var(--outline);
+    }
+}
+
+/* ─── Article Metadata ───────────────────────────────────────── */
+.articleMeta {
+    font-family: var(--font-mono), monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--secondary);
+    margin-bottom: 1.25rem;
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+/* ─── Article Title ──────────────────────────────────────────── */
+.articleTitle {
+    font-family: var(--font-playfair), serif;
+    font-size: clamp(1.75rem, 4vw, 2.75rem);
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: 0;
+    padding-bottom: 1.75rem;
+    border-bottom: 1px solid var(--outline);
+}
+
+/* ─── Article Body ───────────────────────────────────────────── */
+.articleBody {
+    font-family: var(--font-caslon), var(--font-noto-jp), serif;
+    font-size: 1.05rem;
+    line-height: 1.85;
+    padding-top: 1.75rem;
+}
+
+/* ─── Sidebar ────────────────────────────────────────────────── */
+.sidebar {
+    display: none;
+}
+
+@media (min-width: 960px) {
+    .sidebar {
+        display: block;
+        padding-left: 36px;
+        position: sticky;
+        top: 2rem;
+    }
+}
+
+.sidebarLabel {
+    font-family: var(--font-mono), monospace;
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--secondary);
+    border-bottom: 1px solid var(--outline);
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.sidebarNote {
+    font-family: var(--font-caslon), serif;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: var(--secondary);
+    font-style: italic;
+}
+
+/* ─── Return Link ────────────────────────────────────────────── */
+.returnLink {
+    display: inline-block;
+    margin-top: 3rem;
+    font-family: var(--font-mono), monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    text-decoration: none;
+    color: var(--foreground);
+    border: 1px solid var(--foreground);
+    border-top-width: 3px;
+    padding: 0.5rem 1rem;
+    transition: background-color 0.1s, color 0.1s, border-color 0.1s;
+}
+
+.returnLink:hover {
+    background-color: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+}
+
+/* ─── Article Footer ─────────────────────────────────────────── */
+.articleFooter {
+    margin-top: 4rem;
+    border-top: 1px solid var(--outline);
+    padding-top: 1.25rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--font-mono), monospace;
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--secondary);
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}

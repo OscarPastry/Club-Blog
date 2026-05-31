@@ -1,7 +1,7 @@
 .header {
-    border-bottom: 4px double var(--foreground);
+    border-bottom: 1px solid var(--foreground);
     margin-bottom: 2rem;
-    padding: 1rem 0;
+    padding: 1.5rem 0;
     text-align: center;
     width: 100%;
 }
@@ -9,45 +9,45 @@
 .meta {
     display: flex;
     justify-content: space-between;
-    border-bottom: 1px solid var(--foreground);
-    padding-bottom: 0.5rem;
-    margin-bottom: 0.5rem;
-    font-size: 0.75rem;
+    border-bottom: 1px solid var(--outline-variant);
+    padding-bottom: 0.75rem;
+    margin-bottom: 0.75rem;
+    font-size: 0.6rem;
     text-transform: uppercase;
-    letter-spacing: 2px;
-    font-family: sans-serif;
+    letter-spacing: 0.12em;
+    font-family: var(--font-mono), monospace;
+    color: var(--secondary);
     flex-wrap: wrap;
-    /* New: Allow wrapping on very small screens */
     gap: 0.5rem;
 }
 
 .title {
-    /* Responsive font size logic using clamp */
-    font-size: clamp(3rem, 15vw, 6rem);
-    font-weight: 700;
-    text-transform: uppercase;
-    margin: 1rem 0;
-    letter-spacing: -2px;
-    line-height: 0.9;
+    font-family: var(--font-playfair), serif;
+    font-size: clamp(2.5rem, 12vw, 5.5rem);
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    line-height: 0.95;
+    margin: 0.75rem 0;
     word-break: break-word;
-    /* Prevent overflow */
+    text-transform: uppercase;
 }
 
 .subline {
     display: flex;
     justify-content: center;
     gap: 1rem;
-    font-style: italic;
-    border-top: 1px solid var(--foreground);
-    padding-top: 0.5rem;
-    font-size: 0.9rem;
+    font-family: var(--font-mono), monospace;
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    border-top: 1px solid var(--outline-variant);
+    padding-top: 0.75rem;
+    color: var(--secondary);
     flex-wrap: wrap;
-    /* New: Allow wrapping */
 }
 
 @media (max-width: 768px) {
     .header {
-        padding-top: 3rem;
-        /* Push content down to clear absolute hamburger menu */
+        padding-top: 3.5rem;
     }
 }

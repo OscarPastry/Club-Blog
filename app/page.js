@@ -12,7 +12,18 @@ export default async function Home() {
     return (
       <main className={styles.container}>
         <Header />
-        <p style={{ textAlign: 'center' }}>No news today.</p>
+        <p
+          style={{
+            textAlign: "center",
+            fontFamily: "var(--font-mono)",
+            fontSize: "0.7rem",
+            textTransform: "uppercase",
+            letterSpacing: "0.1em",
+            color: "var(--secondary)",
+          }}
+        >
+          No dispatches today.
+        </p>
       </main>
     );
   }
@@ -21,10 +32,10 @@ export default async function Home() {
   const sidePosts = posts.slice(1, 3);
 
   const truncateSummary = (text, wordLimit) => {
-    if (!text) return '';
-    const words = text.split(' ');
+    if (!text) return "";
+    const words = text.split(" ");
     if (words.length <= wordLimit) return text;
-    return words.slice(0, wordLimit).join(' ') + '.....';
+    return words.slice(0, wordLimit).join(" ") + " …";
   };
 
   return (
@@ -33,30 +44,58 @@ export default async function Home() {
       <Header />
 
       <div className={styles.grid}>
-        {/* Main Lead Article */}
+        {/* Lead Article */}
         <article className={styles.leadArticle}>
-          <span className={styles.leadMeta}>{latestPost.date} | {latestPost.author}</span>
+          <span className={styles.leadMeta}>
+            [ {latestPost.date} ] &nbsp; By {latestPost.author}
+          </span>
           <h2 className={styles.leadTitle}>
-            <a href={`/posts/${latestPost.id}`} dangerouslySetInnerHTML={{ __html: latestPost.title }} />
+            <a
+              href={`/posts/${latestPost.id}`}
+              dangerouslySetInnerHTML={{ __html: latestPost.title }}
+            />
           </h2>
-          <p className={styles.leadSummary} dangerouslySetInnerHTML={{ __html: latestPost.summary }} />
+          <p
+            className={styles.leadSummary}
+            dangerouslySetInnerHTML={{ __html: latestPost.summary }}
+          />
           <div className={styles.readMore}>
             <a href={`/posts/${latestPost.id}`}>Continue Reading →</a>
           </div>
         </article>
 
-        {/* Sidebar / Smaller Articles */}
+        {/* Sidebar */}
         <aside className={styles.sidebar}>
-          {sidePosts.map(post => (
+          {sidePosts.map((post) => (
             <article key={post.id} className={styles.sideArticle}>
               <h3 className={styles.sideTitle}>
-                <a href={`/posts/${post.id}`} dangerouslySetInnerHTML={{ __html: post.title }} />
+                <a
+                  href={`/posts/${post.id}`}
+                  dangerouslySetInnerHTML={{ __html: post.title }}
+                />
               </h3>
-              <p className={styles.sideSummary} dangerouslySetInnerHTML={{ __html: truncateSummary(post.summary, 100) }} />
+              <p
+                className={styles.sideSummary}
+                dangerouslySetInnerHTML={{
+                  __html: truncateSummary(post.summary, 80),
+                }}
+              />
             </article>
           ))}
         </aside>
       </div>
+
+      {/* Footer */}
+      <footer className={styles.footer}>
+        <span>Wabi Sabi Weekly</span>
+        <nav className={styles.footerLinks}>
+          <a href="#">About</a>
+          <a href="#">Membership</a>
+          <a href="#">Ethics Policy</a>
+          <a href="#">Contact</a>
+        </nav>
+        <span>© 2024 Wabi Sabi Weekly • Japanese Club Official Blog</span>
+      </footer>
     </main>
   );
 }
